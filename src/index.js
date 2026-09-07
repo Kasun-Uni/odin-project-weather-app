@@ -1,3 +1,5 @@
+import "./style.css";
+
 const API_KEY = "123-123-456-456";
 
 async function fetchWeatherData(location) {
