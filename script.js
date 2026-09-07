@@ -32,13 +32,59 @@ function processWeatherData(rawData) {
   };
 }
 
+// ============ DISPLAY ============
+
+let currentWeather = null;
+let showCelsius = false;
+
+const weatherResult = document.getElementById("weather-result");
+const locationName = document.getElementById("location-name");
+const conditionsEl = document.getElementById("conditions");
+const temperatureEl = document.getElementById("temperature");
+const humidityEl = document.getElementById("humidity");
+const windSpeedEl = document.getElementById("wind-speed");
+const unitToggle = document.getElementById("unit-toggle");
+
+function getBackgroundColor(conditions) {
+  const lower = conditions.toLowerCase();
+  if (lower.includes("rain")) return "#7ea3c9";
+  if (lower.includes("snow")) return "#e0e8f0";
+  if (lower.includes("cloud")) return "#b0b8c1";
+  if (lower.includes("clear")) return "#87ceeb";
+  return "#f3f4f6";
+}
+
+function renderWeather(weather) {
+  locationName.textContent = weather.location;
+  conditionsEl.textContent = weather.conditions;
+  humidityEl.textContent = weather.humidity;
+  windSpeedEl.textContent = weather.windSpeed;
+
+  temperatureEl.textContent = showCelsius
+    ? `${weather.tempC}°C`
+    : `${weather.tempF}°F`;
+
+  unitToggle.textContent = showCelsius ? "Show °F" : "Show °C";
+
+  document.body.style.backgroundColor = getBackgroundColor(weather.conditions);
+
+  weatherResult.classList.remove("hidden");
+}
+
 async function getWeather(location) {
   const rawData = await fetchWeatherData(location);
   if (!rawData) return;
 
-  const weather = processWeatherData(rawData);
-  console.log(weather);
+  currentWeather = processWeatherData(rawData);
+  renderWeather(currentWeather);
 }
+
+unitToggle.addEventListener("click", () => {
+  showCelsius = !showCelsius;
+  if (currentWeather) {
+    renderWeather(currentWeather);
+  }
+});
 
 const weatherForm = document.getElementById("weather-form");
 const locationInput = document.getElementById("location-input");

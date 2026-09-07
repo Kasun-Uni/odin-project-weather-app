@@ -9,3 +9,13 @@ body {
   padding: 2rem;
   transition: background-color 0.4s ease;
 }
+.hidden {
+  display: none;
+}
+
+#weather-result {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 400px;
+}
