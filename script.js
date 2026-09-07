@@ -40,5 +40,14 @@ async function getWeather(location) {
   console.log(weather);
 }
 
-// Test call
-getWeather("london");
+const weatherForm = document.getElementById("weather-form");
+const locationInput = document.getElementById("location-input");
+
+weatherForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const location = locationInput.value.trim();
+  if (location === "") return;
+
+  getWeather(location);
+});
