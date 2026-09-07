@@ -11,12 +11,34 @@ async function fetchWeatherData(location) {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching weather data:", error);
   }
 }
 
+function processWeatherData(rawData) {
+  const current = rawData.currentConditions;
+
+  return {
+    location: rawData.resolvedAddress,
+    tempF: current.temp,
+    tempC: Math.round(((current.temp - 32) * 5) / 9),
+    conditions: current.conditions,
+    icon: current.icon,
+    humidity: current.humidity,
+    windSpeed: current.windspeed,
+    description: rawData.description,
+  };
+}
+
+async function getWeather(location) {
+  const rawData = await fetchWeatherData(location);
+  if (!rawData) return;
+
+  const weather = processWeatherData(rawData);
+  console.log(weather);
+}
+
 // Test call
-fetchWeatherData("london");
+getWeather("london");
