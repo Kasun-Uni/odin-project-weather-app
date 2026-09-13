@@ -1,6 +1,6 @@
 import "./style.css";
 
-const API_KEY = "123-123-456-456";
+const API_KEY = "YZTLWDN5JWREKKP6ZGMBSPNSU";
 
 async function fetchWeatherData(location) {
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}?key=${API_KEY}&unitGroup=us`;
